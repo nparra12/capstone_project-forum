@@ -1,13 +1,14 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import logo from '../images/logo.png';
+import showtime from '../images/showtime.gif';
 
 
 export default function FrontPage() {
 
     // site logo
     const sitelogo = logo
-  
+    
 
     return (
         <div className="container">
@@ -22,13 +23,13 @@ export default function FrontPage() {
                         </div>
                         <div id="solgan">
                             <div className="row justify-content-center">
-                                <h2>The best movie forum on the planet!</h2>
+                                <h3>The best movie forum on the planet!</h3>
                             </div>
                             <div className="row justify-content-center">
-                     
+                                <img src={showtime} alt='showtime' />
                             </div><br></br>
                             <div className="row justify-content-center">
-                                <h5>Discuss Reviews, Ratings, Cast, Quotes & News</h5>
+                                <h5>Discuss Reviews, Ratings, Cast, Quotes & News.</h5>
                             </div>
                         </div>
                         <div id="landing-nav">
