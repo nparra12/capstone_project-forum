@@ -1,0 +1,82 @@
+--MySQL DATABASE---
+
+--Create user table
+CREATE TABLE `forumdb`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `firstname` VARCHAR(25) NOT NULL,
+  `lastname` VARCHAR(25) NOT NULL,
+  `username` VARCHAR(25) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `createdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
+
+--create users
+insert into users (firstname, lastname, username, password) values ('FnameUser1', 'LnameUser1', 'User01', 'test12345');
+insert into users (firstname, lastname, username, password) values ('FnameUser2', 'LnameUser2', 'User02', 'test12345');
+insert into users (firstname, lastname, username, password) values ('FnameUser3', 'LnameUser3', 'User03', 'test12345');
+insert into users (firstname, lastname, username, password) values ('FnameUser4', 'LnameUser4', 'User04', 'test12345');
+
+
+
+--create categories table
+CREATE TABLE `forumdb`.`categories` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `category` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
+
+insert into categories (category) values ("Comedy");
+insert into categories (category) values ("Horror");
+insert into categories (category) values ("Action");
+insert into categories (category) values ("Romance");
+insert into categories (category) values ("Drama");
+
+
+--create questions table
+CREATE TABLE `forumdb`.`questions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(300) NOT NULL,
+  `body` LONGTEXT NOT NULL,
+  `votes` INT NOT NULL DEFAULT 0,
+  `userid` INT NOT NULL,
+  `categoryid` INT NOT NULL,
+  `createdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `FK_QUESTIONS_idx` (`categoryid` ASC) VISIBLE,
+  INDEX `FK_USER_idx` (`userid` ASC) VISIBLE,
+  CONSTRAINT `FK_QUESTION`
+    FOREIGN KEY (`categoryid`)
+    REFERENCES `forumdb`.`categories` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_USER`
+    FOREIGN KEY (`userid`)
+    REFERENCES `forumdb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+--create answers table
+CREATE TABLE `forumdb`.`answers` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `body` VARCHAR(500) NOT NULL,
+  `userid` INT NOT NULL,
+  `questionid` INT NOT NULL,
+  `createdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `FK_USER_idx` (`userid` ASC) VISIBLE,
+  INDEX `FK_QUESTION_idx` (`questionid` ASC) VISIBLE,
+  CONSTRAINT `FK_USERID`
+    FOREIGN KEY (`userid`)
+    REFERENCES `forumdb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_QUESTIONID`
+    FOREIGN KEY (`questionid`)
+    REFERENCES `forumdb`.`questions` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
